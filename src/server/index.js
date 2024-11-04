@@ -7,8 +7,6 @@ const cors = require('cors');
 const bodyParser = require('body-parser')
 
 
-// const mockAPIResponse = require('./mockAPI.js');
-
 const app = express()
 
 app.use(express.static('dist'))
@@ -29,13 +27,11 @@ const sendToSentiment = async (url = '', postData = {}) => {
             'Content-Type': 'application/x-www-form-urlencoded',
             'Authorization': `Bearer ${postData.key}`
         }, 
-        // body: JSON.stringify(postData) // matching the content-type header (converting to json before sending)
+        
         body: params.toString() // Convert postData to form-urlencoded
 
     })
-    // console.log(postData);
-    
-
+  
     try {
         const postResponse = await postReq.json();
         console.log(postResponse);
@@ -52,7 +48,6 @@ let displayData = {};
 
 app.get('/', function (req, res) {
     res.sendFile('dist/index.html') // to be compatible with the new distribution folder resultant index.html file
-    // res.sendFile(path.resolve('src/client/views/index.html'))
 })
 
 // designates what port the app will listen to for incoming requests
@@ -60,13 +55,6 @@ app.listen(8080, function () {
     console.log('Example app listening on port 8080!')
 })
 
-
-app.get('/test', function (req, res) {
-
-
-    // only send response once received from the sentiment analysis API
-    res.send("placeholder")
-})
 
 app.post('/receiveSentiment', async function(request, response) {
     
